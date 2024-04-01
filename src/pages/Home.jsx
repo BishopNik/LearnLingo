@@ -1,14 +1,17 @@
 /** @format */
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from 'components/styles/home.module.css';
 import clsx from 'clsx';
 import { LogoIcon } from 'components/Icon';
 import { theme } from '../constants/theme';
+import { MainContext } from 'components/Helpers';
 
 function Home() {
 	const navigate = useNavigate();
+	const { idxColor } = useContext(MainContext);
+
 	return (
 		<main className={styles.main}>
 			<ul className={styles.cont}>
@@ -17,7 +20,7 @@ function Home() {
 						Unlock your potential with the best{' '}
 						<span
 							className={styles.block1_title_span}
-							style={{ backgroundColor: theme[0].property.color3 }}
+							style={{ backgroundColor: theme[idxColor].property.color3 }}
 						>
 							language
 						</span>{' '}
@@ -30,7 +33,7 @@ function Home() {
 					</p>
 					<button
 						className={styles.block1_button}
-						style={{ backgroundColor: theme[0].property.buttonGetStart }}
+						style={{ backgroundColor: theme[idxColor].property.buttonGetStart }}
 						type='button'
 						onClick={() => navigate('/teachers')}
 					>
@@ -39,15 +42,15 @@ function Home() {
 				</li>
 				<li
 					className={clsx(styles.block, styles.block2)}
-					style={{ backgroundColor: theme[0].property.color3 }}
+					style={{ backgroundColor: theme[idxColor].property.color3 }}
 				>
 					<div className={styles.block2_icon}>
-						<LogoIcon data={theme[0].property} />
+						<LogoIcon data={theme[idxColor].property} />
 					</div>
 				</li>
 				<li
 					className={clsx(styles.block, styles.block3)}
-					style={{ borderColor: theme[0].property.buttonGetStart }}
+					style={{ borderColor: theme[idxColor].property.buttonGetStart }}
 				>
 					<ul className={styles.block3_cont}>
 						<li className={styles.block3_cont_item}>

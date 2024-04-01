@@ -13,18 +13,42 @@ export const theme = [
 	},
 	{
 		name: 'Green',
-		property: {},
+		property: {
+			color1: '#fff',
+			color2: '#fff',
+			color3: '#CBDED3',
+			color4: '#fff',
+			buttonGetStart: '#9FBAAE',
+		},
 	},
 	{
 		name: 'Blue',
-		property: {},
+		property: {
+			color1: '#fff',
+			color2: '#fff',
+			color3: '#fff',
+			color4: '#fff',
+			buttonGetStart: '#fff',
+		},
 	},
 	{
 		name: 'Red',
-		property: {},
+		property: {
+			color1: '#fff',
+			color2: '#fff',
+			color3: '#fff',
+			color4: '#fff',
+			buttonGetStart: '#fff',
+		},
 	},
 	{
 		name: 'Orange',
-		property: {},
+		property: {
+			color1: '#fff',
+			color2: '#fff',
+			color3: '#fff',
+			color4: '#fff',
+			buttonGetStart: '#fff',
+		},
 	},
 ];

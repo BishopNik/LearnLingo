@@ -5,5 +5,11 @@ import React, { createContext, useState } from 'react';
 export const MainContext = createContext();
 
 export const Context = ({ children }) => {
-	return <MainContext.Provider value={{}}>{children}</MainContext.Provider>;
+	const [idxColor] = useState(randomChoice());
+
+	function randomChoice() {
+		return Math.floor(Math.random() * 6);
+	}
+
+	return <MainContext.Provider value={{ idxColor }}>{children}</MainContext.Provider>;
 };

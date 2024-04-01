@@ -1,0 +1,260 @@
+/** @format */
+
+.main {
+	position: relative;
+	display: flex;
+	gap: 48px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 1184px;
+	padding: 24px;
+	border-radius: 24px;
+	background-color: #ffffff;
+}
+
+.button_heart {
+	position: absolute;
+	top: 24px;
+	right: 24px;
+	width: 26px;
+	height: 26px;
+	padding: 0;
+	margin: 0;
+	border: none;
+	background-color: transparent;
+}
+
+.logo {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+	border: 3px solid #fbe9ba;
+}
+
+.avatar {
+	width: 96px;
+	height: 96px;
+	border-radius: 50%;
+}
+
+.teacher_experience {
+	margin: 0;
+	margin-bottom: 32px;
+	color: #121417;
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 24px;
+}
+
+.reviewers {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+	margin-bottom: 32px;
+}
+
+.reviewer {
+	display: grid;
+	grid-template-columns: 44px auto;
+	grid-template-areas:
+		'a d'
+		'c c';
+	row-gap: 16px;
+	column-gap: 12px;
+}
+
+.reviewer_avatar {
+	grid-area: a;
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	background-color: lightgray;
+}
+
+.reviewer_data {
+	grid-area: d;
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+}
+
+.reviewer_comment {
+	grid-area: c;
+	margin: 0;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 24px;
+	color: #121417;
+}
+
+.reviewer_rating {
+	display: flex;
+	gap: 8px;
+	color: #121417;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 18px;
+}
+
+.reviewer_name {
+	color: #8a8a89;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 24px;
+}
+
+.active {
+	position: absolute;
+	top: 16px;
+	right: 20px;
+	width: 12px;
+	height: 12px;
+	background-color: #38cd3e;
+	border-radius: 50%;
+	border: 2px solid #ffffff;
+}
+
+.teacher_header {
+	display: flex;
+	gap: 192px;
+	margin-bottom: 8px;
+	color: #121417;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 24px;
+}
+
+.teacher_header_lang {
+	color: #8a8a89;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 24px;
+}
+
+.teacher_name {
+	margin: 0;
+	margin-bottom: 32px;
+	color: #121417;
+	font-size: 24px;
+	font-weight: 500;
+	line-height: 24px;
+}
+
+.teacher_header_list {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.teacher_header_list_item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.teacher_header_list_separator {
+	height: 16px;
+	width: 0;
+	border: 1px solid #12141733;
+}
+
+.teacher_header_list_item_price {
+	color: #38cd3e;
+}
+
+.list {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin-bottom: 16px;
+	color: #8a8a89;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 24px;
+}
+
+.list_black {
+	color: #121417;
+}
+
+.list_underline {
+	text-decoration: underline;
+}
+
+.button_readmore {
+	margin-bottom: 32px;
+	color: #121417;
+	background-color: transparent;
+	border: none;
+	text-decoration: underline;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 24px;
+	cursor: pointer;
+}
+
+.level_cont {
+	display: flex;
+	gap: 8px;
+	margin-bottom: 32px;
+}
+
+.level {
+	padding: 8px 12px 8px 12px;
+	border-radius: 35px;
+	border: 1px solid #12141733;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 16px;
+	background-color: transparent;
+}
+
+.level_first {
+	background-color: #f4c550;
+	border-color: #f4c550;
+}
+
+.button_trial {
+	padding: 16px 48px 16px 48px;
+	border-radius: 12px;
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 28px;
+	color: #121417;
+	background-color: #f4c550;
+	border: none;
+	cursor: pointer;
+}
+
+.button_trial:hover {
+	scale: 1.05;
+	transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.icon_star {
+	width: 16px;
+	height: 16px;
+}
+
+.icon_book {
+	width: 16px;
+	height: 16px;
+	fill: transparent;
+}
+
+.icon_heart {
+	width: 26px;
+	height: 26px;
+	fill: transparent;
+	stroke: #121417;
+	cursor: pointer;
+}
+
+.icon_heart_in {
+	stroke: #f4c550;
+	fill: #f4c550;
+}
