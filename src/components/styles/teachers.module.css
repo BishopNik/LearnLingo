@@ -1,0 +1,8 @@
+/** @format */
+
+.main {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+	background-color: #f8f8f8;
+}
