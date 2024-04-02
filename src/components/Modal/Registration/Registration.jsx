@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 // import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { ModalWindow, customStyles } from 'components/Modal';
@@ -8,10 +8,12 @@ import { RegisterSchema } from 'components/Helpers';
 import Icon from 'components/Icon';
 import styles from 'components/styles/auth.module.css';
 import { theme } from '../../../constants/theme';
+import { MainContext } from 'components/Helpers';
 
 export const Registration = ({ isOpen, onRequestClose }) => {
 	// const dispatch = useDispatch();
 	const [showPassword, setShowPassword] = useState(false);
+	const { idxColor } = useContext(MainContext);
 
 	const togglePasswordVisibility = () => {
 		setShowPassword(!showPassword);
@@ -93,7 +95,7 @@ export const Registration = ({ isOpen, onRequestClose }) => {
 								type='submit'
 								disabled={isSubmitting}
 								className={styles.submit_button}
-								style={{ backgroundColor: theme[0].property.buttonGetStart }}
+								style={{ backgroundColor: theme[idxColor].property.buttonGetStart }}
 							>
 								Sign Up
 							</button>

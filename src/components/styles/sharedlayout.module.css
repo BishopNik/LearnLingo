@@ -2,11 +2,10 @@
 
 .header {
 	width: 1184px;
-	height: 48px;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 20px;
-	margin-bottom: 20px;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 
 .container {

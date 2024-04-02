@@ -1,14 +1,15 @@
 /** @format */
 
-import React, { useState } from 'react';
-import data from '../data/teachers.json';
+import React, { useContext, useState } from 'react';
 import styles from 'components/styles/teacher.module.css';
 import clsx from 'clsx';
 import Icon from 'components/Icon';
+import { MainContext } from 'components/Helpers';
 
 function Teacher({ teacher }) {
 	const [more, setMore] = useState(false);
 	const [inFavorites, setInFavorites] = useState(false);
+	const { setIsOpen, setTeacher } = useContext(MainContext);
 
 	return (
 		<div className={styles.main}>
@@ -112,7 +113,10 @@ function Teacher({ teacher }) {
 					<button
 						className={styles.button_trial}
 						type='button'
-						onClick={() => console.log('Book trial lesson')}
+						onClick={() => {
+							setIsOpen(true);
+							setTeacher(teacher);
+						}}
 					>
 						Book trial lesson
 					</button>

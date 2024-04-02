@@ -5,8 +5,12 @@ import styles from 'components/styles/sharedlayout.module.css';
 import Icon from 'components/Icon';
 import { Login } from 'components/Modal/Login';
 import { Registration } from 'components/Modal/Registration';
+import { useLocation } from 'react-router-dom';
 
 const Header = () => {
+	const { pathname } = useLocation();
+	const rootElement = document.getElementById('root');
+
 	const [isOpenLogin, setIsOpenLogin] = useState(false);
 	const [isOpenReg, setIsOpenReg] = useState(false);
 
@@ -15,8 +19,15 @@ const Header = () => {
 		if (isOpenReg) setIsOpenReg(false);
 	};
 
+	if (pathname === '/') {
+		rootElement.style.backgroundColor = '#FFFFFF';
+	} else rootElement.style.backgroundColor = '#F8F8F8';
+
 	return (
-		<header className={styles.header}>
+		<header
+			className={styles.header}
+			style={{ backgroundColor: pathname === '/' ? '#FFFFFF' : '#F8F8F8' }}
+		>
 			<ul className={styles.container}>
 				<li className={styles.logo}>
 					<Icon name={'logo'} className={styles.logo_icon} />
