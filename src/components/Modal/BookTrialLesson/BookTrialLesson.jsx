@@ -14,7 +14,7 @@ function BookTrialLesson() {
 	const onRequestClose = () => setIsOpen(false);
 
 	const handleFormSubmit = values => {
-		toastSuccess(`Booking ok ${JSON.stringify(values, null, 2)}`);
+		toastSuccess(`✅ ${JSON.stringify(values, null, 2)}`);
 		onRequestClose();
 	};
 
