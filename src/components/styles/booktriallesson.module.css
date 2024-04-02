@@ -186,5 +186,5 @@
 
 .submit_button:hover {
 	scale: 1.05;
-	transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+	transition: scale 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }

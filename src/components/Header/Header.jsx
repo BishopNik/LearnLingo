@@ -1,13 +1,16 @@
 /** @format */
 
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import styles from 'components/styles/sharedlayout.module.css';
 import Icon from 'components/Icon';
 import { Login } from 'components/Modal/Login';
 import { Registration } from 'components/Modal/Registration';
 import { useLocation } from 'react-router-dom';
+import { MainContext } from 'components/Helpers';
+import { theme } from '../../constants/theme';
 
 const Header = () => {
+	const { idxColor } = useContext(MainContext);
 	const { pathname } = useLocation();
 	const rootElement = document.getElementById('root');
 
@@ -50,7 +53,11 @@ const Header = () => {
 				<li>
 					<ul className={styles.auth}>
 						<li className={styles.login_container}>
-							<Icon name={'login'} className={styles.login_icon} />
+							<Icon
+								name={'login'}
+								className={styles.login_icon}
+								style={{ stroke: theme[idxColor].property.buttonGetStart }}
+							/>
 							<button
 								type='button'
 								className={styles.login}

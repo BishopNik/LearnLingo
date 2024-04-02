@@ -1,0 +1,59 @@
+/** @format */
+.form {
+	display: flex;
+	gap: 20px;
+	width: 1184px;
+	padding: 32px 0;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.label {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+
+	color: #8a8a89;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 18px;
+}
+
+.icon_select {
+	position: absolute;
+	bottom: 16px;
+	right: 18px;
+	width: 20px;
+	height: 20px;
+	fill: transparent;
+	pointer-events: none;
+}
+
+.field_main {
+	padding: 16px 18px;
+	border-radius: 14px;
+	border: none;
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 20px;
+	color: #121417;
+
+	-ms-appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-o-appearance: none;
+	appearance: none;
+}
+
+.field_languages {
+	width: 221px;
+}
+
+.field_level {
+	width: 198px;
+}
+
+.field_price {
+	width: 124px;
+}
