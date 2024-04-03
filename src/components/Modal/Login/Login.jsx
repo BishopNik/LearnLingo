@@ -3,7 +3,7 @@
 import React, { useState, useContext } from 'react';
 // import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { ModalWindow, customStyles } from 'components/Modal';
+import { ModalWindow } from 'components/Modal';
 import { LoginSchema } from 'components/Helpers';
 import Icon from 'components/Icon';
 import styles from 'components/styles/auth.module.css';
@@ -25,7 +25,7 @@ export const Login = ({ isOpen, onRequestClose }) => {
 	};
 
 	return (
-		<ModalWindow isOpen={isOpen} onRequestClose={onRequestClose} style={customStyles}>
+		<ModalWindow isOpen={isOpen} onRequestClose={onRequestClose}>
 			<div className={styles.main_login}>
 				<button type='button' onClick={onRequestClose} className={styles.close_button}>
 					<Icon name={'close'} className={styles.close_icon} />

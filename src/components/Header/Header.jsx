@@ -44,9 +44,15 @@ const Header = () => {
 							</a>
 						</li>
 						<li>
-							<a href='/teachers' className={styles.link}>
-								Teachers
-							</a>
+							{pathname === '/teachers' ? (
+								<a href='/favorites' className={styles.link}>
+									Favorites
+								</a>
+							) : (
+								<a href='/teachers' className={styles.link}>
+									Teachers
+								</a>
+							)}
 						</li>
 					</ul>
 				</li>

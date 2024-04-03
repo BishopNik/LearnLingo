@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Teacher from 'components/Teacher';
 import data from 'components/data/teachers.json';
 import styles from 'components/styles/teachers.module.css';
@@ -10,16 +10,30 @@ import { MainContext } from 'components/Helpers';
 import { theme } from '../constants/theme';
 
 function Teachers() {
-	const { idxColor } = useContext(MainContext);
+	const { idxColor, language, level, price } = useContext(MainContext);
+	const [filterTeacher, setFilterTeacher] = useState(data);
+
+	useEffect(() => {
+		const filteredData =
+			language || level || price
+				? data.filter(
+						i =>
+							(i.languages.includes(language) || !language) &&
+							(i.levels.includes(level) || !level) &&
+							(i.price_per_hour <= price || !price)
+				  )
+				: data;
+
+		setFilterTeacher(filteredData);
+	}, [language, level, price]);
 
 	return (
 		<>
 			<Filter />
 			<div className={styles.main}>
-				<Teacher teacher={data[0]} />
-				<Teacher teacher={data[1]} />
-				<Teacher teacher={data[2]} />
-				<Teacher teacher={data[3]} />
+				{filterTeacher.map((d, idx) => (
+					<Teacher key={idx} teacher={d} />
+				))}
 			</div>
 			<div className={styles.button_cont}>
 				<button

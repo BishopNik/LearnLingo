@@ -29,10 +29,11 @@ function App() {
 			<Route path='/' element={<SharedLayout />}>
 				<Route index element={<Home />} />
 				<Route path='teachers' element={<Teachers />} />
-				<Route
+				<Route path='favorites' element={<Favorites />} />
+				{/* <Route
 					path='/favorites'
 					element={<PrivateRoute component={<Favorites />} redirectTo='/' />}
-				/>
+				/> */}
 				<Route path='*' element={<Home />} />
 			</Route>
 		</Routes>

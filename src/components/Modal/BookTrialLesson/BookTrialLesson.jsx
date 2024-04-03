@@ -2,7 +2,7 @@
 
 import React, { useContext } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { ModalWindow, customStyles } from 'components/Modal';
+import { ModalWindow } from 'components/Modal';
 import styles from 'components/styles/booktriallesson.module.css';
 import { MainContext, BookLessonSchema, toastSuccess } from 'components/Helpers';
 import Icon from 'components/Icon';
@@ -19,7 +19,7 @@ function BookTrialLesson() {
 	};
 
 	return (
-		<ModalWindow isOpen={isOpen} onRequestClose={onRequestClose} style={customStyles}>
+		<ModalWindow isOpen={isOpen} onRequestClose={onRequestClose}>
 			<div className={styles.main}>
 				<button type='button' onClick={onRequestClose} className={styles.close_button}>
 					<Icon name={'close'} className={styles.close_icon} />

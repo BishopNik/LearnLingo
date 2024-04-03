@@ -1,27 +1,43 @@
 /** @format */
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styles from 'components/styles/teacher.module.css';
 import clsx from 'clsx';
 import Icon from 'components/Icon';
-import { MainContext } from 'components/Helpers';
+import {
+	MainContext,
+	readToSessionStorage,
+	saveToSessionStorage,
+	deleteToSessionStorage,
+} from 'components/Helpers';
 import { theme } from '../../constants/theme';
 
-function Teacher({ teacher }) {
+function Teacher({ teacher, refresh }) {
 	const [more, setMore] = useState(false);
-	const [inFavorites, setInFavorites] = useState(false);
+	const [inFavorite, setInFavorite] = useState(false);
 	const { idxColor, setIsOpen, setTeacher } = useContext(MainContext);
+
+	useEffect(() => {
+		const data = readToSessionStorage().filter(
+			t => JSON.stringify(t) === JSON.stringify(teacher)
+		).length;
+		setInFavorite(data !== 0);
+	}, [teacher]);
 
 	return (
 		<div className={styles.main}>
 			<button
 				className={styles.button_heart}
 				type='button'
-				onClick={() => setInFavorites(!inFavorites)}
+				onClick={() => {
+					setInFavorite(!inFavorite);
+					!inFavorite ? saveToSessionStorage(teacher) : deleteToSessionStorage(teacher);
+					refresh && refresh();
+				}}
 			>
 				<Icon
 					name={'heart'}
-					className={clsx(styles.icon_heart, inFavorites && styles.icon_heart_in)}
+					className={clsx(styles.icon_heart, inFavorite && styles.icon_heart_in)}
 				/>
 			</button>
 			<div className={styles.logo}>
