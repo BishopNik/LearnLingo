@@ -1,15 +1,15 @@
 /** @format */
 
-import React, { useContext } from 'react';
+import React from 'react';
 import styles from 'components/styles/filter.module.css';
 import { Formik, Field, Form } from 'formik';
 import clsx from 'clsx';
 import Icon from 'components/Icon';
 import data from 'components/data/teachers.json';
-import { MainContext } from 'components/Helpers';
+import { useMainContext } from 'components/Helpers';
 
 function Filter() {
-	const { setLanguage, setLevel, setPrice } = useContext(MainContext);
+	const { setLanguage, setLevel, setPrice } = useMainContext();
 	const allLevel = new Set();
 	const allLanguage = new Set();
 

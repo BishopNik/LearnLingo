@@ -1,17 +1,17 @@
 /** @format */
 
-import React, { useContext } from 'react';
+import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { ModalWindow } from 'components/Modal';
 import styles from 'components/styles/booktriallesson.module.css';
-import { MainContext, BookLessonSchema, toastSuccess } from 'components/Helpers';
+import { useMainContext, BookLessonSchema, toastSuccess } from 'components/Helpers';
 import Icon from 'components/Icon';
 import { theme } from '../../../constants/theme';
 
 function BookTrialLesson() {
-	const { idxColor, isOpen, setIsOpen, teacher } = useContext(MainContext);
+	const { idxColor, isOpenBookTrial, setIsOpenBookTrial, teacher } = useMainContext();
 
-	const onRequestClose = () => setIsOpen(false);
+	const onRequestClose = () => setIsOpenBookTrial(false);
 
 	const handleFormSubmit = values => {
 		toastSuccess(`✅ ${JSON.stringify(values, null, 2)}`);
@@ -19,7 +19,7 @@ function BookTrialLesson() {
 	};
 
 	return (
-		<ModalWindow isOpen={isOpen} onRequestClose={onRequestClose}>
+		<ModalWindow isOpen={isOpenBookTrial} onRequestClose={onRequestClose}>
 			<div className={styles.main}>
 				<button type='button' onClick={onRequestClose} className={styles.close_button}>
 					<Icon name={'close'} className={styles.close_icon} />

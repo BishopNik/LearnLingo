@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom/client';
 // import { PersistGate } from 'redux-persist/integration/react';
 import { BrowserRouter } from 'react-router-dom';
 import App from 'components/App';
-import { СhangeThemeProvider, Context } from 'components/Helpers';
+import { Context } from 'components/Helpers';
 import { GlobalStyle } from 'components/Helpers/GlobalStyle';
 // import { store, persistor } from './redux/store';
 import 'modern-normalize';
@@ -16,9 +16,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
 		{/* <Provider store={store}> */}
 		{/* <PersistGate loading={null} persistor={persistor}> */}
-		<BrowserRouter basename='/'>
-			<Context>
-				{/* <СhangeThemeProvider> */}
+		<Context>
+			<BrowserRouter basename='/'>
 				<App />
 				<Toaster
 					position='top-right'
@@ -33,9 +32,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 					}}
 				/>
 				<GlobalStyle />
-				{/* </СhangeThemeProvider> */}
-			</Context>
-		</BrowserRouter>
+			</BrowserRouter>
+		</Context>
 		{/* </PersistGate> */}
 		{/* </Provider> */}
 	</React.StrictMode>

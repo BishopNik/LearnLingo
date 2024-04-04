@@ -1,16 +1,16 @@
 /** @format */
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Teacher from 'components/Teacher';
 import data from 'components/data/teachers.json';
 import styles from 'components/styles/teachers.module.css';
 import Filter from 'components/Filter';
 import BookTrialLesson from 'components/Modal/BookTrialLesson';
-import { MainContext } from 'components/Helpers';
+import { useMainContext } from 'components/Helpers';
 import { theme } from '../constants/theme';
 
 function Teachers() {
-	const { idxColor, language, level, price } = useContext(MainContext);
+	const { idxColor, language, level, price } = useMainContext();
 	const [filterTeacher, setFilterTeacher] = useState(data);
 
 	useEffect(() => {

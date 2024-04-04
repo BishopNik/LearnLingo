@@ -1,30 +1,48 @@
 /** @format */
 
-import React, { useState, useContext } from 'react';
-// import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { ModalWindow } from 'components/Modal';
-import { RegisterSchema } from 'components/Helpers';
+import { useMainContext, RegisterSchema, auth, toastError, toastSuccess } from 'components/Helpers';
 import Icon from 'components/Icon';
 import styles from 'components/styles/auth.module.css';
 import { theme } from '../../../constants/theme';
-import { MainContext } from 'components/Helpers';
 
-export const Registration = ({ isOpen, onRequestClose }) => {
-	// const dispatch = useDispatch();
+export const Registration = () => {
 	const [showPassword, setShowPassword] = useState(false);
-	const { idxColor } = useContext(MainContext);
+	const { idxColor, setUser, isOpenReg, setIsOpenReg } = useMainContext();
+
+	const onRequestClose = () => {
+		if (isOpenReg) setIsOpenReg(false);
+	};
 
 	const togglePasswordVisibility = () => {
 		setShowPassword(!showPassword);
 	};
-	const handleFormSubmit = (values, action) => {
-		console.log(values);
+
+	const registerUser = async ({ name, email, password }) => {
+		try {
+			const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+			updateProfile(userCredential.user, {
+				displayName: name,
+			});
+			toastSuccess('User registered successfully');
+			return userCredential.user;
+		} catch (error) {
+			toastError('Registration error:', error);
+			throw error;
+		}
+	};
+
+	const handleFormSubmit = async values => {
+		const user = await registerUser(values);
+		setUser(user);
 		onRequestClose();
 	};
 
 	return (
-		<ModalWindow isOpen={isOpen} onRequestClose={onRequestClose}>
+		<ModalWindow isOpen={isOpenReg} onRequestClose={onRequestClose}>
 			<div className={styles.main_reg}>
 				<button type='button' onClick={onRequestClose} className={styles.close_button}>
 					<Icon name={'close'} className={styles.close_icon} />

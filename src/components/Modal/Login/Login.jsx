@@ -1,31 +1,46 @@
 /** @format */
 
-import React, { useState, useContext } from 'react';
-// import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { ModalWindow } from 'components/Modal';
-import { LoginSchema } from 'components/Helpers';
+import { LoginSchema, useMainContext, auth, toastError, toastSuccess } from 'components/Helpers';
 import Icon from 'components/Icon';
 import styles from 'components/styles/auth.module.css';
 import { theme } from '../../../constants/theme';
-import { MainContext } from 'components/Helpers';
 
-export const Login = ({ isOpen, onRequestClose }) => {
-	// const dispatch = useDispatch();
+export const Login = () => {
 	const [showPassword, setShowPassword] = useState(false);
-	const { idxColor } = useContext(MainContext);
+	const { idxColor, setUser, isOpenLogin, setIsOpenLogin } = useMainContext();
+
+	const onRequestClose = () => {
+		if (isOpenLogin) setIsOpenLogin(false);
+	};
 
 	const togglePasswordVisibility = () => {
 		setShowPassword(!showPassword);
 	};
 
-	const handleFormSubmit = (values, action) => {
-		console.log(values);
+	const loginUser = async ({ email, password }) => {
+		try {
+			const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+			toastSuccess('User logged in successfully');
+			return userCredential.user;
+		} catch (error) {
+			toastError('Login error:', error);
+			throw error;
+		}
+	};
+
+	const handleFormSubmit = async values => {
+		const user = await loginUser(values);
+		setUser(user);
 		onRequestClose();
 	};
 
 	return (
-		<ModalWindow isOpen={isOpen} onRequestClose={onRequestClose}>
+		<ModalWindow isOpen={isOpenLogin} onRequestClose={onRequestClose}>
 			<div className={styles.main_login}>
 				<button type='button' onClick={onRequestClose} className={styles.close_button}>
 					<Icon name={'close'} className={styles.close_icon} />

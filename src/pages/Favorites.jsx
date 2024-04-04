@@ -1,15 +1,20 @@
 /** @format */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Teacher from 'components/Teacher';
 import styles from 'components/styles/teachers.module.css';
 import BookTrialLesson from 'components/Modal/BookTrialLesson';
-import { readToSessionStorage } from 'components/Helpers';
+import { readToSessionStorage, useMainContext } from 'components/Helpers';
 
 function Favorites() {
+	const { toFavorite, setToFavorite } = useMainContext();
 	const [inFavorites, setInFavorites] = useState(readToSessionStorage());
 
 	const refresh = () => setInFavorites(readToSessionStorage());
+
+	useEffect(() => {
+		if (toFavorite) setToFavorite(false);
+	}, [setToFavorite, toFavorite]);
 
 	return (
 		<>

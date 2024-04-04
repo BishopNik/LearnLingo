@@ -1,30 +1,50 @@
 /** @format */
 
-import { useState, useContext } from 'react';
+import React, { useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from 'components/styles/sharedlayout.module.css';
 import Icon from 'components/Icon';
 import { Login } from 'components/Modal/Login';
 import { Registration } from 'components/Modal/Registration';
-import { useLocation } from 'react-router-dom';
-import { MainContext } from 'components/Helpers';
+import { useMainContext, auth, toastError, toastSuccess } from 'components/Helpers';
 import { theme } from '../../constants/theme';
+import { SelectAuth } from 'components/Modal/SelectAuth';
 
 const Header = () => {
-	const { idxColor } = useContext(MainContext);
+	const {
+		idxColor,
+		setIsOpenLogin,
+		setIsOpenReg,
+		user,
+		setIsOpenSelectAuth,
+		toFavorite,
+		setToFavorite,
+		setUser,
+	} = useMainContext();
+
+	const navigate = useNavigate();
 	const { pathname } = useLocation();
 	const rootElement = document.getElementById('root');
-
-	const [isOpenLogin, setIsOpenLogin] = useState(false);
-	const [isOpenReg, setIsOpenReg] = useState(false);
-
-	const onRequestClose = () => {
-		if (isOpenLogin) setIsOpenLogin(false);
-		if (isOpenReg) setIsOpenReg(false);
-	};
 
 	if (pathname === '/') {
 		rootElement.style.backgroundColor = '#FFFFFF';
 	} else rootElement.style.backgroundColor = '#F8F8F8';
+
+	const logout = async () => {
+		try {
+			await auth.signOut();
+			setUser(null);
+			toastSuccess('User logged out successfully');
+		} catch (error) {
+			toastError('Error logging out:', error);
+		}
+	};
+
+	useEffect(() => {
+		if (user && toFavorite) {
+			navigate('/favorites');
+		}
+	}, [navigate, toFavorite, user]);
 
 	return (
 		<header
@@ -39,53 +59,84 @@ const Header = () => {
 				<li>
 					<ul className={styles.page}>
 						<li>
-							<a href='/' className={styles.link}>
+							<Link to='/' className={styles.link}>
 								Home
-							</a>
+							</Link>
 						</li>
 						<li>
 							{pathname === '/teachers' ? (
-								<a href='/favorites' className={styles.link}>
-									Favorites
-								</a>
+								user ? (
+									<Link to='/favorites' className={styles.link}>
+										Favorites
+									</Link>
+								) : (
+									<button
+										className={styles.link}
+										onClick={() => {
+											setToFavorite(true);
+											setIsOpenSelectAuth(true);
+										}}
+									>
+										Favorites
+									</button>
+								)
 							) : (
-								<a href='/teachers' className={styles.link}>
+								<Link to='/teachers' className={styles.link}>
 									Teachers
-								</a>
+								</Link>
 							)}
 						</li>
 					</ul>
 				</li>
-				<li>
-					<ul className={styles.auth}>
-						<li className={styles.login_container}>
-							<Icon
-								name={'login'}
-								className={styles.login_icon}
-								style={{ stroke: theme[idxColor].property.buttonGetStart }}
-							/>
-							<button
-								type='button'
-								className={styles.login}
-								onClick={() => setIsOpenLogin(true)}
-							>
-								Log in
-							</button>
-						</li>
-						<li>
-							<button
-								type='button'
-								className={styles.registration}
-								onClick={() => setIsOpenReg(true)}
-							>
-								Registration
-							</button>
-						</li>
-					</ul>
+				<li className={styles.auth_cont}>
+					{user ? (
+						<ul className={styles.auth}>
+							<li>
+								<span className={styles.user}>{user.displayName}</span>
+							</li>
+							<li>
+								<button
+									type='button'
+									className={styles.login}
+									style={{ height: '48px' }}
+									onClick={() => logout()}
+								>
+									Log out
+								</button>
+							</li>
+						</ul>
+					) : (
+						<ul className={styles.auth}>
+							<li className={styles.login_container}>
+								<Icon
+									name={'login'}
+									className={styles.login_icon}
+									style={{ stroke: theme[idxColor].property.buttonGetStart }}
+								/>
+								<button
+									type='button'
+									className={styles.login}
+									onClick={() => setIsOpenLogin(true)}
+								>
+									Log in
+								</button>
+							</li>
+							<li>
+								<button
+									type='button'
+									className={styles.registration}
+									onClick={() => setIsOpenReg(true)}
+								>
+									Registration
+								</button>
+							</li>
+						</ul>
+					)}
 				</li>
 			</ul>
-			<Login isOpen={isOpenLogin} onRequestClose={onRequestClose} />
-			<Registration isOpen={isOpenReg} onRequestClose={onRequestClose} />
+			<Login />
+			<Registration />
+			<SelectAuth />
 		</header>
 	);
 };

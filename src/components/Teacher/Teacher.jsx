@@ -1,11 +1,11 @@
 /** @format */
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from 'components/styles/teacher.module.css';
 import clsx from 'clsx';
 import Icon from 'components/Icon';
 import {
-	MainContext,
+	useMainContext,
 	readToSessionStorage,
 	saveToSessionStorage,
 	deleteToSessionStorage,
@@ -15,7 +15,7 @@ import { theme } from '../../constants/theme';
 function Teacher({ teacher, refresh }) {
 	const [more, setMore] = useState(false);
 	const [inFavorite, setInFavorite] = useState(false);
-	const { idxColor, setIsOpen, setTeacher } = useContext(MainContext);
+	const { idxColor, setIsOpenBookTrial, setTeacher } = useMainContext();
 
 	useEffect(() => {
 		const data = readToSessionStorage().filter(
@@ -137,7 +137,7 @@ function Teacher({ teacher, refresh }) {
 						style={{ backgroundColor: theme[idxColor].property.buttonGetStart }}
 						type='button'
 						onClick={() => {
-							setIsOpen(true);
+							setIsOpenBookTrial(true);
 							setTeacher(teacher);
 						}}
 					>
