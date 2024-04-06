@@ -2,16 +2,24 @@
 
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { ModalWindow } from 'components/Modal';
-import { LoginSchema, useMainContext, auth, toastError, toastSuccess } from 'components/Helpers';
+import {
+	LoginSchema,
+	useMainContext,
+	auth,
+	firestore,
+	toastError,
+	toastSuccess,
+} from 'components/Helpers';
 import Icon from 'components/Icon';
 import styles from 'components/styles/auth.module.css';
-import { theme } from '../../../constants/theme';
+import { theme } from 'constants/theme';
 
 export const Login = () => {
 	const [showPassword, setShowPassword] = useState(false);
-	const { idxColor, setUser, isOpenLogin, setIsOpenLogin } = useMainContext();
+	const { idxColor, setIdxColor, setUser, isOpenLogin, setIsOpenLogin } = useMainContext();
 
 	const onRequestClose = () => {
 		if (isOpenLogin) setIsOpenLogin(false);
@@ -23,13 +31,17 @@ export const Login = () => {
 
 	const loginUser = async ({ email, password }) => {
 		try {
-			const userCredential = await signInWithEmailAndPassword(auth, email, password);
+			const { user } = await signInWithEmailAndPassword(auth, email, password);
+			const userRef = doc(firestore, 'users', user.uid);
+			const docSnap = await getDoc(userRef);
 
+			if (docSnap.exists()) {
+				setIdxColor(docSnap.data().color);
+			}
 			toastSuccess('User logged in successfully');
-			return userCredential.user;
+			return user;
 		} catch (error) {
 			toastError('Login error:', error);
-			throw error;
 		}
 	};
 

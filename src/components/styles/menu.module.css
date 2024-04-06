@@ -1,0 +1,22 @@
+/** @format */
+
+.menu_color {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-top: 6px;
+	margin-left: -40px;
+	padding: 20px 40px;
+	border-radius: 8px;
+	border: 1px solid #121417;
+	background-color: whitesmoke;
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 20px;
+}
+
+.button_color {
+	border: none;
+	background-color: transparent;
+}

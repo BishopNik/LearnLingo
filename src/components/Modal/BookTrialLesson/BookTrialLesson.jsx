@@ -6,7 +6,7 @@ import { ModalWindow } from 'components/Modal';
 import styles from 'components/styles/booktriallesson.module.css';
 import { useMainContext, BookLessonSchema, toastSuccess } from 'components/Helpers';
 import Icon from 'components/Icon';
-import { theme } from '../../../constants/theme';
+import { theme } from 'constants/theme';
 
 function BookTrialLesson() {
 	const { idxColor, isOpenBookTrial, setIsOpenBookTrial, teacher } = useMainContext();

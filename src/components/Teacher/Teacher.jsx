@@ -10,7 +10,7 @@ import {
 	saveToSessionStorage,
 	deleteToSessionStorage,
 } from 'components/Helpers';
-import { theme } from '../../constants/theme';
+import { theme } from 'constants/theme';
 
 function Teacher({ teacher, refresh }) {
 	const [more, setMore] = useState(false);

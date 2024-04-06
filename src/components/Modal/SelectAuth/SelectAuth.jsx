@@ -5,7 +5,7 @@ import { useMainContext } from 'components/Helpers';
 import { ModalWindow } from 'components/Modal';
 import styles from 'components/styles/selectauth.module.css';
 import Icon from 'components/Icon';
-import { theme } from '../../../constants/theme';
+import { theme } from 'constants/theme';
 
 export const SelectAuth = () => {
 	const { idxColor, setIsOpenLogin, setIsOpenReg, isOpenSelectAuth, setIsOpenSelectAuth } =

@@ -1,10 +1,9 @@
 /** @format */
 
-import { useEffect, lazy } from 'react';
-// import { useDispatch } from 'react-redux';
-// import { refreshUser } from 'redux/auth/operations';
+import { useEffect, lazy, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-// import { useAuth } from 'hooks';
+import { signInWithCustomToken } from 'firebase/auth';
+import { auth, useMainContext } from 'components/Helpers';
 import SharedLayout from './SharedLayout';
 import Loader from 'components/Loader';
 import { PrivateRoute } from 'components/PrivateRoute';
@@ -14,13 +13,35 @@ const Teachers = lazy(() => import('pages/Teachers'));
 const Favorites = lazy(() => import('pages/Favorites'));
 
 function App() {
-	// const dispatch = useDispatch();
-	// const { isRefreshing } = useAuth();
-	const isRefreshing = false;
+	const { setUser } = useMainContext();
+	const [isRefreshing, setIsRefreshing] = useState(true);
 
-	// useEffect(() => {
-	// 	dispatch(refreshUser());
-	// }, [dispatch]);
+	const refreshUser = async token => {
+		await signInWithCustomToken(auth, token);
+		const user = auth.currentUser;
+		return user;
+	};
+
+	useEffect(() => {
+		const refreshUserUseEffect = async () => {
+			if (isRefreshing) {
+				const token = localStorage.getItem('accessToken') || '';
+				try {
+					if (token) {
+						const user = await refreshUser(token);
+						setUser(user);
+					}
+				} catch (error) {
+					console.error('Error refreshing user:', error);
+					setUser(null);
+				} finally {
+					setIsRefreshing(false);
+				}
+			}
+		};
+
+		refreshUserUseEffect();
+	}, [isRefreshing, setUser]);
 
 	return isRefreshing ? (
 		<Loader />

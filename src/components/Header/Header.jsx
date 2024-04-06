@@ -1,14 +1,15 @@
 /** @format */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from 'components/styles/sharedlayout.module.css';
 import Icon from 'components/Icon';
 import { Login } from 'components/Modal/Login';
 import { Registration } from 'components/Modal/Registration';
 import { useMainContext, auth, toastError, toastSuccess } from 'components/Helpers';
-import { theme } from '../../constants/theme';
+import { theme } from 'constants/theme';
 import { SelectAuth } from 'components/Modal/SelectAuth';
+import Menu from 'components/Menu';
 
 const Header = () => {
 	const {
@@ -21,6 +22,7 @@ const Header = () => {
 		setToFavorite,
 		setUser,
 	} = useMainContext();
+	const [isOpenMenu, setIsOpenMenu] = useState(false);
 
 	const navigate = useNavigate();
 	const { pathname } = useLocation();
@@ -29,6 +31,8 @@ const Header = () => {
 	if (pathname === '/') {
 		rootElement.style.backgroundColor = '#FFFFFF';
 	} else rootElement.style.backgroundColor = '#F8F8F8';
+
+	const handlerOnClose = () => setIsOpenMenu(false);
 
 	const logout = async () => {
 		try {
@@ -92,7 +96,17 @@ const Header = () => {
 					{user ? (
 						<ul className={styles.auth}>
 							<li>
-								<span className={styles.user}>{user.displayName}</span>
+								<button
+									id='user'
+									className={styles.user}
+									style={{
+										backgroundColor: theme[idxColor].property.buttonGetStart,
+									}}
+									onClick={() => setIsOpenMenu(true)}
+								>
+									{user.displayName}
+								</button>
+								{isOpenMenu && <Menu onClose={handlerOnClose} />}
 							</li>
 							<li>
 								<button

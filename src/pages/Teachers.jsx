@@ -7,7 +7,7 @@ import styles from 'components/styles/teachers.module.css';
 import Filter from 'components/Filter';
 import BookTrialLesson from 'components/Modal/BookTrialLesson';
 import { useMainContext } from 'components/Helpers';
-import { theme } from '../constants/theme';
+import { theme } from 'constants/theme';
 
 function Teachers() {
 	const { idxColor, language, level, price } = useMainContext();

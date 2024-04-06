@@ -3,11 +3,19 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { collection, doc, setDoc } from 'firebase/firestore';
 import { ModalWindow } from 'components/Modal';
-import { useMainContext, RegisterSchema, auth, toastError, toastSuccess } from 'components/Helpers';
+import {
+	useMainContext,
+	RegisterSchema,
+	auth,
+	firestore,
+	toastError,
+	toastSuccess,
+} from 'components/Helpers';
 import Icon from 'components/Icon';
 import styles from 'components/styles/auth.module.css';
-import { theme } from '../../../constants/theme';
+import { theme } from 'constants/theme';
 
 export const Registration = () => {
 	const [showPassword, setShowPassword] = useState(false);
@@ -23,15 +31,18 @@ export const Registration = () => {
 
 	const registerUser = async ({ name, email, password }) => {
 		try {
-			const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-			updateProfile(userCredential.user, {
+			const { user } = await createUserWithEmailAndPassword(auth, email, password);
+			updateProfile(user, {
 				displayName: name,
 			});
+			const usersRef = collection(firestore, 'users');
+			await setDoc(doc(usersRef, user.uid), {
+				color: idxColor,
+			});
 			toastSuccess('User registered successfully');
-			return userCredential.user;
+			return user;
 		} catch (error) {
 			toastError('Registration error:', error);
-			throw error;
 		}
 	};
 

@@ -68,9 +68,10 @@
 .user {
 	margin: 0;
 	padding: 0;
-	padding: 12px;
+	padding: 10px 12px;
 	border-radius: 15px;
 	border: 1px solid #5f155b;
+	outline: none;
 	color: #5f155b;
 	font-size: 16px;
 	font-weight: 700;
