@@ -38,6 +38,7 @@ export const Registration = () => {
 			const usersRef = collection(firestore, 'users');
 			await setDoc(doc(usersRef, user.uid), {
 				color: idxColor,
+				likedTeachers: [],
 			});
 			toastSuccess('User registered successfully');
 			return user;
@@ -48,6 +49,7 @@ export const Registration = () => {
 
 	const handleFormSubmit = async values => {
 		const user = await registerUser(values);
+		localStorage.setItem('refreshToken', user.refreshToken);
 		setUser(user);
 		onRequestClose();
 	};

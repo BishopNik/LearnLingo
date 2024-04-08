@@ -32,9 +32,13 @@ function Menu({ onClose }) {
 	const changeUserColor = async (userUid, color) => {
 		try {
 			const usersRef = collection(firestore, 'users');
-			await setDoc(doc(usersRef, userUid), {
-				color: color,
-			});
+			await setDoc(
+				doc(usersRef, userUid),
+				{
+					color: color,
+				},
+				{ merge: true }
+			);
 
 			toastSuccess('Color changed successfully');
 		} catch (error) {

@@ -12,17 +12,10 @@ import { SelectAuth } from 'components/Modal/SelectAuth';
 import Menu from 'components/Menu';
 
 const Header = () => {
-	const {
-		idxColor,
-		setIsOpenLogin,
-		setIsOpenReg,
-		user,
-		setIsOpenSelectAuth,
-		toFavorite,
-		setToFavorite,
-		setUser,
-	} = useMainContext();
+	const { idxColor, setIsOpenLogin, setIsOpenReg, user, setIsOpenSelectAuth, setUser } =
+		useMainContext();
 	const [isOpenMenu, setIsOpenMenu] = useState(false);
+	const [toFavorite, setToFavorite] = useState(false);
 
 	const navigate = useNavigate();
 	const { pathname } = useLocation();
@@ -37,6 +30,7 @@ const Header = () => {
 	const logout = async () => {
 		try {
 			await auth.signOut();
+			localStorage.setItem('refreshToken', '');
 			setUser(null);
 			toastSuccess('User logged out successfully');
 		} catch (error) {
@@ -46,6 +40,7 @@ const Header = () => {
 
 	useEffect(() => {
 		if (user && toFavorite) {
+			setToFavorite(false);
 			navigate('/favorites');
 		}
 	}, [navigate, toFavorite, user]);

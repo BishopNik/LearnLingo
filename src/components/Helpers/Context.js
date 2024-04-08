@@ -1,13 +1,11 @@
 /** @format */
 
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { signInWithCustomToken } from 'firebase/auth';
-import { auth } from 'components/Helpers';
 
 export const MainContext = createContext();
 
 export const Context = ({ children }) => {
-	// color
+	// Сolor
 	const [idxColor, setIdxColor] = useState(0);
 
 	// Modal window
@@ -25,32 +23,24 @@ export const Context = ({ children }) => {
 	const [price, setPrice] = useState(false);
 
 	// Favorite
-	const [toFavorite, setToFavorite] = useState(false);
+	const [likedTeachers, setLikedTeachers] = useState([]);
 
 	// User
 	const [user, setUser] = useState(null);
 
-	const refreshUser = async token => {
-		await signInWithCustomToken(auth, token);
-		return auth.currentUser;
-	};
+	// useEffect(() => {
+	// 	const userSaveToken = async () => {
+	// 		try {
+	// 			if (user) {
+	// 				localStorage.setItem('refreshToken', user.refreshToken);
+	// 			} else localStorage.setItem('refreshToken', '');
+	// 		} catch (error) {
+	// 			console.error('Error saving to localStorage:', error);
+	// 		}
+	// 	};
 
-	useEffect(() => {
-		const userSaveToken = async () => {
-			try {
-				if (user) {
-					console.log('🚀 ~ userSaveToken ~ user:', user);
-					// const refreshedUser = await refreshUser(user.accessToken);
-					// console.log('🚀 ~ useEffect ~ refreshedUser:', refreshedUser);
-					localStorage.setItem('accessToken', user.accessToken);
-				} else localStorage.setItem('accessToken', '');
-			} catch (error) {
-				console.error('Error saving to localStorage:', error);
-			}
-		};
-
-		userSaveToken();
-	}, [user]);
+	// 	userSaveToken();
+	// }, [user]);
 
 	return (
 		<MainContext.Provider
@@ -75,8 +65,8 @@ export const Context = ({ children }) => {
 				setUser,
 				isOpenSelectAuth,
 				setIsOpenSelectAuth,
-				toFavorite,
-				setToFavorite,
+				likedTeachers,
+				setLikedTeachers,
 			}}
 		>
 			{children}

@@ -1,28 +1,23 @@
 /** @format */
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from 'components/styles/teacher.module.css';
 import clsx from 'clsx';
 import Icon from 'components/Icon';
-import {
-	useMainContext,
-	readToSessionStorage,
-	saveToSessionStorage,
-	deleteToSessionStorage,
-} from 'components/Helpers';
+import { useMainContext, saveToFirestoreStorage } from 'components/Helpers';
 import { theme } from 'constants/theme';
 
-function Teacher({ teacher, refresh }) {
+function Teacher({ idx, teacher }) {
 	const [more, setMore] = useState(false);
-	const [inFavorite, setInFavorite] = useState(false);
-	const { idxColor, setIsOpenBookTrial, setTeacher } = useMainContext();
-
-	useEffect(() => {
-		const data = readToSessionStorage().filter(
-			t => JSON.stringify(t) === JSON.stringify(teacher)
-		).length;
-		setInFavorite(data !== 0);
-	}, [teacher]);
+	const {
+		idxColor,
+		setIsOpenBookTrial,
+		setTeacher,
+		likedTeachers,
+		setLikedTeachers,
+		user,
+		setIsOpenSelectAuth,
+	} = useMainContext();
 
 	return (
 		<div className={styles.main}>
@@ -30,14 +25,23 @@ function Teacher({ teacher, refresh }) {
 				className={styles.button_heart}
 				type='button'
 				onClick={() => {
-					setInFavorite(!inFavorite);
-					!inFavorite ? saveToSessionStorage(teacher) : deleteToSessionStorage(teacher);
-					refresh && refresh();
+					if (user) {
+						const newList = likedTeachers.includes(idx)
+							? likedTeachers.filter(t => t !== idx)
+							: [...likedTeachers, idx];
+						setLikedTeachers(newList);
+						saveToFirestoreStorage(user.uid, newList);
+					} else {
+						setIsOpenSelectAuth(true);
+					}
 				}}
 			>
 				<Icon
 					name={'heart'}
-					className={clsx(styles.icon_heart, inFavorite && styles.icon_heart_in)}
+					className={clsx(
+						styles.icon_heart,
+						likedTeachers?.includes(idx) && user && styles.icon_heart_in
+					)}
 				/>
 			</button>
 			<div className={styles.logo}>

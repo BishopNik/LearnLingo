@@ -4,23 +4,40 @@ import React, { useEffect, useState } from 'react';
 import Teacher from 'components/Teacher';
 import styles from 'components/styles/teachers.module.css';
 import BookTrialLesson from 'components/Modal/BookTrialLesson';
-import { readToSessionStorage, useMainContext } from 'components/Helpers';
+import { readToFirestoreStorageOne, useMainContext } from 'components/Helpers';
 
 function Favorites() {
-	const { toFavorite, setToFavorite } = useMainContext();
-	const [inFavorites, setInFavorites] = useState(readToSessionStorage());
-
-	const refresh = () => setInFavorites(readToSessionStorage());
+	const { likedTeachers } = useMainContext();
+	const [inFavorites, setInFavorites] = useState([]);
 
 	useEffect(() => {
-		if (toFavorite) setToFavorite(false);
-	}, [setToFavorite, toFavorite]);
+		const readLikedTeacher = async () => {
+			const liked = [];
+
+			await Promise.all(
+				likedTeachers.map(async uid => {
+					const data = await readToFirestoreStorageOne(uid);
+					liked.push({ idx: uid, teacher: data });
+				})
+			);
+
+			setInFavorites(liked);
+		};
+
+		readLikedTeacher();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
+		const newInFavorites = inFavorites.filter(d => likedTeachers.includes(d.idx));
+		if (inFavorites.length !== newInFavorites.length) setInFavorites(newInFavorites);
+	}, [inFavorites, likedTeachers]);
 
 	return (
 		<>
 			<div className={styles.main} style={{ paddingTop: '50px' }}>
 				{inFavorites.map(d => (
-					<Teacher key={d.name + d.surname + Date.now()} teacher={d} refresh={refresh} />
+					<Teacher key={d.idx} idx={d.idx} teacher={d.teacher} />
 				))}
 			</div>
 

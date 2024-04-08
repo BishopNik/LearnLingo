@@ -2,16 +2,15 @@
 
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { ModalWindow } from 'components/Modal';
 import {
 	LoginSchema,
 	useMainContext,
 	auth,
-	firestore,
 	toastError,
 	toastSuccess,
+	readSettingsUser,
 } from 'components/Helpers';
 import Icon from 'components/Icon';
 import styles from 'components/styles/auth.module.css';
@@ -19,7 +18,8 @@ import { theme } from 'constants/theme';
 
 export const Login = () => {
 	const [showPassword, setShowPassword] = useState(false);
-	const { idxColor, setIdxColor, setUser, isOpenLogin, setIsOpenLogin } = useMainContext();
+	const { idxColor, setIdxColor, setUser, isOpenLogin, setIsOpenLogin, setLikedTeachers } =
+		useMainContext();
 
 	const onRequestClose = () => {
 		if (isOpenLogin) setIsOpenLogin(false);
@@ -32,12 +32,10 @@ export const Login = () => {
 	const loginUser = async ({ email, password }) => {
 		try {
 			const { user } = await signInWithEmailAndPassword(auth, email, password);
-			const userRef = doc(firestore, 'users', user.uid);
-			const docSnap = await getDoc(userRef);
+			const data = await readSettingsUser(user);
 
-			if (docSnap.exists()) {
-				setIdxColor(docSnap.data().color);
-			}
+			setIdxColor(data.color || 0);
+			setLikedTeachers(data.likedTeachers || []);
 			toastSuccess('User logged in successfully');
 			return user;
 		} catch (error) {
@@ -47,6 +45,7 @@ export const Login = () => {
 
 	const handleFormSubmit = async values => {
 		const user = await loginUser(values);
+		localStorage.setItem('refreshToken', user.refreshToken);
 		setUser(user);
 		onRequestClose();
 	};
