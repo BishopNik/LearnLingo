@@ -6,7 +6,7 @@ Learn Lingo
 
 1. Клонируйте репозиторий на локальную машину:
 
-git clone https://github.com/your-username/your-project.git
+git clone https://github.com/BishopNik/LearnLingo.git
 
 2. Перейдите в директорию проекта:
 
