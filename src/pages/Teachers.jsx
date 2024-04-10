@@ -1,54 +1,85 @@
 /** @format */
 
 import React, { useEffect, useState } from 'react';
-import { ref, get } from 'firebase/database';
+import { ref, get, query, limitToFirst, startAt, orderByKey } from 'firebase/database';
 import Teacher from 'components/Teacher';
 import styles from 'components/styles/teachers.module.css';
 import Filter from 'components/Filter';
 import BookTrialLesson from 'components/Modal/BookTrialLesson';
-import { useMainContext, database, toastError } from 'components/Helpers';
+import { useMainContext, database } from 'components/Helpers';
 import { theme } from 'constants/theme';
 
 function Teachers() {
-	const { idxColor, language, level, price } = useMainContext();
+	const { idxColor, language, level, price, setLanguage, setLevel, setPrice } = useMainContext();
+	const [teachers, setTeachers] = useState([]);
 	const [filterTeacher, setFilterTeacher] = useState([]);
+	const [page, setPage] = useState(1);
 
 	useEffect(() => {
-		const databaseRef = ref(database);
-		get(databaseRef)
-			.then(snapshot => {
-				const filteredData = snapshot
-					.val()
-					.filter(
-						i =>
-							(i.languages.includes(language) || !language) &&
-							(i.levels.includes(level) || !level) &&
-							(i.price_per_hour <= price || !price)
-					);
+		setLanguage('');
+		setLevel('');
+		setPrice('');
+	}, [setLanguage, setLevel, setPrice]);
 
-				setFilterTeacher(filteredData);
+	useEffect(() => {
+		const fetchingTeacher = async () => {
+			const databaseRef = ref(database);
+
+			const queryTeacher = query(
+				databaseRef,
+				orderByKey(),
+				startAt(String((page - 1) * 4)),
+				limitToFirst(4)
+			);
+
+			const teachers = [];
+
+			const snapshot = await get(queryTeacher);
+
+			snapshot.forEach(childSnapshot => {
+				teachers.push(childSnapshot.val());
+			});
+			setTeachers(oldState => [...oldState, ...teachers]);
+		};
+
+		fetchingTeacher();
+	}, [page]);
+
+	useEffect(() => {
+		const filteredData = teachers
+			.map((item, index) => {
+				return { ...item, teacherIndex: index };
 			})
-			.catch(er => toastError(`Error loading data: ${er}`));
-	}, [language, level, price]);
+			.filter(
+				i =>
+					(i.languages.includes(language) || !language) &&
+					(i.levels.includes(level) || !level) &&
+					(i.price_per_hour <= price || !price)
+			);
+
+		setFilterTeacher(filteredData);
+	}, [language, level, price, teachers]);
 
 	return (
 		<>
 			<Filter />
 			<div className={styles.main}>
-				{filterTeacher.map((d, idx) => (
-					<Teacher key={idx} idx={idx} teacher={d} />
+				{filterTeacher.map(d => (
+					<Teacher key={d.uid} idx={d.teacherIndex} teacher={d} />
 				))}
 			</div>
-			<div className={styles.button_cont}>
-				<button
-					className={styles.button_loadmore}
-					style={{ backgroundColor: theme[idxColor].property.buttonGetStart }}
-					type='button'
-					onClick={() => console.log('Load more')}
-				>
-					Load more
-				</button>
-			</div>
+			{page < 8 && (
+				<div className={styles.button_cont}>
+					<button
+						className={styles.button_loadmore}
+						style={{ backgroundColor: theme[idxColor].property.buttonGetStart }}
+						type='button'
+						onClick={() => setPage(page + 1)}
+					>
+						Load more
+					</button>
+				</div>
+			)}
 			<BookTrialLesson />
 		</>
 	);

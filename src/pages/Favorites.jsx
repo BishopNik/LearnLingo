@@ -9,6 +9,7 @@ import { readToFirestoreStorageOne, useMainContext } from 'components/Helpers';
 function Favorites() {
 	const { likedTeachers } = useMainContext();
 	const [inFavorites, setInFavorites] = useState([]);
+	const [load, setLoad] = useState(false);
 
 	useEffect(() => {
 		const readLikedTeacher = async () => {
@@ -22,6 +23,7 @@ function Favorites() {
 			);
 
 			setInFavorites(liked);
+			setLoad(true);
 		};
 
 		readLikedTeacher();
@@ -36,9 +38,9 @@ function Favorites() {
 	return (
 		<>
 			<div className={styles.main} style={{ paddingTop: '50px' }}>
-				{inFavorites.map(d => (
-					<Teacher key={d.idx} idx={d.idx} teacher={d.teacher} />
-				))}
+				{inFavorites.length > 0
+					? inFavorites.map(d => <Teacher key={d.idx} idx={d.idx} teacher={d.teacher} />)
+					: load && <h1 className={styles.empty}>Favorites empty</h1>}
 			</div>
 
 			<BookTrialLesson />

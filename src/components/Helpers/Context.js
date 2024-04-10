@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext } from 'react';
 
 export const MainContext = createContext();
 
@@ -27,20 +27,6 @@ export const Context = ({ children }) => {
 
 	// User
 	const [user, setUser] = useState(null);
-
-	// useEffect(() => {
-	// 	const userSaveToken = async () => {
-	// 		try {
-	// 			if (user) {
-	// 				localStorage.setItem('refreshToken', user.refreshToken);
-	// 			} else localStorage.setItem('refreshToken', '');
-	// 		} catch (error) {
-	// 			console.error('Error saving to localStorage:', error);
-	// 		}
-	// 	};
-
-	// 	userSaveToken();
-	// }, [user]);
 
 	return (
 		<MainContext.Provider
