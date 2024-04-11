@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 import styled from 'components/styles/modal.module.css';
 import clsx from 'clsx';
 
-Modal.setAppElement('#modal-root');
+Modal.setAppElement('#root');
 
 const customStyles = {
 	overlay: {
@@ -23,6 +23,7 @@ const customStyles = {
 		border: 'none',
 		backgroundColor: ' #FFFFFF',
 		boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.2)',
+		maxWidth: '100%',
 	},
 };
 
@@ -30,8 +31,8 @@ export const ModalWindow = ({ children, isOpen, onRequestClose }) => {
 	const overlayStyle = {
 		top: document.documentElement.scrollTop,
 		left: document.documentElement.scrollLeft,
-		width: '100vw',
-		height: '100vh',
+		width: '100%',
+		height: '100%',
 		position: 'absolute',
 		backgroundColor: 'rgba(72, 76, 78, 0.6)',
 		zIndex: '999',

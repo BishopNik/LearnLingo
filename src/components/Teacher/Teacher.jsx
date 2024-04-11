@@ -123,11 +123,13 @@ function Teacher({ idx, teacher }) {
 					{teacher.levels.map((l, idx) => (
 						<li
 							key={idx}
-							className={clsx(styles.level, idx === 0 && styles.level_first)}
+							className={styles.level}
 							style={{
-								backgroundColor:
-									idx === 0 && theme[idxColor].property.buttonGetStart,
 								borderColor: theme[idxColor].property.buttonGetStart,
+								':hover': {
+									backgroundColor: theme[idxColor].property.buttonGetStart,
+									borderColor: theme[idxColor].property.buttonGetStart,
+								},
 							}}
 							type='button'
 						>

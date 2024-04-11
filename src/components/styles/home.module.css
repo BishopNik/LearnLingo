@@ -1,9 +1,9 @@
 /** @format */
 
 .main {
-	max-width: fit-content;
 	margin-left: auto;
 	margin-right: auto;
+	padding: 0 20px 50px 20px;
 }
 
 .cont {
