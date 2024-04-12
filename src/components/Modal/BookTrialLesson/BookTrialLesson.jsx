@@ -4,7 +4,7 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { ModalWindow } from 'components/Modal';
 import styles from 'components/styles/booktriallesson.module.css';
-import { useMainContext, BookLessonSchema, toastSuccess } from 'components/Helpers';
+import { useMainContext, BookLessonSchema, toastSuccess } from 'helpers';
 import Icon from 'components/Icon';
 import { theme } from 'constants/theme';
 

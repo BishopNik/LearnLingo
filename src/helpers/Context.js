@@ -18,9 +18,9 @@ export const Context = ({ children }) => {
 	const [teacher, setTeacher] = useState(false);
 
 	// Filter
-	const [language, setLanguage] = useState(false);
-	const [level, setLevel] = useState(false);
-	const [price, setPrice] = useState(false);
+	const [language, setLanguage] = useState('');
+	const [level, setLevel] = useState('');
+	const [price, setPrice] = useState('');
 
 	// Favorite
 	const [likedTeachers, setLikedTeachers] = useState([]);

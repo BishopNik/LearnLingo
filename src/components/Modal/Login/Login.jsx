@@ -11,7 +11,7 @@ import {
 	toastError,
 	toastSuccess,
 	readSettingsUser,
-} from 'components/Helpers';
+} from 'helpers';
 import Icon from 'components/Icon';
 import styles from 'components/styles/auth.module.css';
 import { theme } from 'constants/theme';

@@ -212,6 +212,7 @@
 	font-weight: 500;
 	line-height: 16px;
 	background-color: transparent;
+	cursor: pointer;
 }
 
 .level:hover {

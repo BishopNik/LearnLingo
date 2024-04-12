@@ -5,14 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { collection, doc, setDoc } from 'firebase/firestore';
 import { ModalWindow } from 'components/Modal';
-import {
-	useMainContext,
-	RegisterSchema,
-	auth,
-	firestore,
-	toastError,
-	toastSuccess,
-} from 'components/Helpers';
+import { useMainContext, RegisterSchema, auth, firestore, toastError, toastSuccess } from 'helpers';
 import Icon from 'components/Icon';
 import styles from 'components/styles/auth.module.css';
 import { theme } from 'constants/theme';

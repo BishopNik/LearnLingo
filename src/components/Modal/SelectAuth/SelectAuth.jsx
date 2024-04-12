@@ -1,7 +1,7 @@
 /** @format */
 
 import React from 'react';
-import { useMainContext } from 'components/Helpers';
+import { useMainContext } from 'helpers';
 import { ModalWindow } from 'components/Modal';
 import styles from 'components/styles/selectauth.module.css';
 import Icon from 'components/Icon';

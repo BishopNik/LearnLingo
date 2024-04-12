@@ -4,7 +4,7 @@ import React, { useEffect, useCallback } from 'react';
 import { collection, doc, setDoc } from 'firebase/firestore';
 import styles from 'components/styles/menu.module.css';
 import { theme } from 'constants/theme';
-import { useMainContext, firestore, toastError, toastSuccess } from 'components/Helpers';
+import { useMainContext, firestore, toastError, toastSuccess } from 'helpers';
 
 function Menu({ onClose }) {
 	const { setIdxColor, user } = useMainContext();

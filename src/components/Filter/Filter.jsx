@@ -1,15 +1,15 @@
 /** @format */
 
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import styles from 'components/styles/filter.module.css';
 import { Formik, Field, Form } from 'formik';
 import clsx from 'clsx';
 import Icon from 'components/Icon';
 import data from 'components/data/teachers.json';
-import { useMainContext } from 'components/Helpers';
+import { useMainContext } from 'helpers';
 
 function Filter() {
-	const { setLanguage, setLevel, setPrice } = useMainContext();
+	const { language, level, price, setLanguage, setLevel, setPrice } = useMainContext();
 	const allLevel = new Set();
 	const allLanguage = new Set();
 
@@ -18,6 +18,16 @@ function Filter() {
 		languages.forEach(l => allLanguage.add(l));
 	});
 
+	const setInitialState = useCallback(() => {
+		setLanguage('');
+		setLevel('');
+		setPrice('');
+	}, [setLanguage, setLevel, setPrice]);
+
+	useEffect(() => {
+		setInitialState();
+	}, [setInitialState]);
+
 	return (
 		<Formik
 			initialValues={{
@@ -25,15 +35,18 @@ function Filter() {
 				level: '',
 				price: '',
 			}}
+			onReset={() => {
+				setInitialState();
+			}}
 		>
-			{({ values, handleChange }) => (
+			{({ handleChange }) => (
 				<Form autoComplete='off' className={styles.form}>
 					<label className={styles.label}>
 						Languages
 						<Field
 							as='select'
 							name='language'
-							value={values.language}
+							value={language}
 							className={clsx(styles.field_languages, styles.field_main)}
 							onChange={e => {
 								handleChange(e);
@@ -54,7 +67,7 @@ function Filter() {
 						<Field
 							as='select'
 							name='level'
-							value={values.level}
+							value={level}
 							className={clsx(styles.field_level, styles.field_main)}
 							onChange={e => {
 								handleChange(e);
@@ -75,7 +88,7 @@ function Filter() {
 						<Field
 							as='select'
 							name='price'
-							value={values.price}
+							value={price}
 							className={clsx(styles.field_price, styles.field_main)}
 							onChange={e => {
 								handleChange(e);
@@ -83,14 +96,17 @@ function Filter() {
 							}}
 						>
 							<option value=''>---</option>
-							{[...Array(6)].map((_, idx) => (
-								<option key={idx} value={(idx + 1) * 10}>
-									{(idx + 1) * 10} $
+							{[...Array(12)].map((_, idx) => (
+								<option key={idx} value={(idx + 1) * 5}>
+									{(idx + 1) * 5} $
 								</option>
 							))}
 						</Field>
 						<Icon name={'chevron-down'} className={styles.icon_select} />
 					</label>
+					<button className={styles.reset} type='reset'>
+						<Icon name={'close'} className={styles.close_icon} />
+					</button>
 				</Form>
 			)}
 		</Formik>

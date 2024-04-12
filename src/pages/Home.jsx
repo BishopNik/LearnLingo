@@ -6,7 +6,7 @@ import styles from 'components/styles/home.module.css';
 import clsx from 'clsx';
 import { LogoIcon } from 'components/Icon';
 import { theme } from '../constants/theme';
-import { MainContext } from 'components/Helpers';
+import { MainContext } from 'helpers';
 
 function Home() {
 	const navigate = useNavigate();
@@ -44,6 +44,7 @@ function Home() {
 					className={clsx(styles.block, styles.block2)}
 					style={{ backgroundColor: theme[idxColor].property.color3 }}
 				>
+					<div className={styles.block2_png}></div>
 					<div className={styles.block2_icon}>
 						<LogoIcon data={theme[idxColor].property} />
 					</div>

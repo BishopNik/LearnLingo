@@ -6,7 +6,7 @@ import Teacher from 'components/Teacher';
 import styles from 'components/styles/teachers.module.css';
 import Filter from 'components/Filter';
 import BookTrialLesson from 'components/Modal/BookTrialLesson';
-import { useMainContext, database } from 'components/Helpers';
+import { useMainContext, database } from 'helpers';
 import { theme } from 'constants/theme';
 
 function Teachers() {
@@ -61,14 +61,22 @@ function Teachers() {
 	}, [language, level, price, teachers]);
 
 	return (
-		<>
+		<div className={styles.container}>
 			<Filter />
 			<div className={styles.main}>
-				{filterTeacher.map(d => (
-					<Teacher key={d.uid} idx={d.teacherIndex} teacher={d} />
-				))}
+				{filterTeacher.length > 0
+					? filterTeacher.map(d => (
+							<Teacher key={d.uid} idx={d.teacherIndex} teacher={d} />
+					  ))
+					: (language !== '' || level !== '' || price !== '') && (
+							<h1 className={styles.empty}>
+								{`Nothing downloaded matches the search criteria${
+									page < 8 ? ', please load more...' : ''
+								}`}
+							</h1>
+					  )}
 			</div>
-			{page < 8 && (
+			{page < 8 && teachers.length > 0 && (
 				<div className={styles.button_cont}>
 					<button
 						className={styles.button_loadmore}
@@ -81,7 +89,7 @@ function Teachers() {
 				</div>
 			)}
 			<BookTrialLesson />
-		</>
+		</div>
 	);
 }
 

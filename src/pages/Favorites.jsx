@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Teacher from 'components/Teacher';
 import styles from 'components/styles/teachers.module.css';
 import BookTrialLesson from 'components/Modal/BookTrialLesson';
-import { readToFirestoreStorageOne, useMainContext } from 'components/Helpers';
+import { readToFirestoreStorageOne, useMainContext } from 'helpers';
 
 function Favorites() {
 	const { likedTeachers } = useMainContext();
@@ -36,7 +36,7 @@ function Favorites() {
 	}, [inFavorites, likedTeachers]);
 
 	return (
-		<>
+		<div className={styles.container}>
 			<div className={styles.main} style={{ paddingTop: '50px' }}>
 				{inFavorites.length > 0
 					? inFavorites.map(d => <Teacher key={d.idx} idx={d.idx} teacher={d.teacher} />)
@@ -44,7 +44,7 @@ function Favorites() {
 			</div>
 
 			<BookTrialLesson />
-		</>
+		</div>
 	);
 }
 

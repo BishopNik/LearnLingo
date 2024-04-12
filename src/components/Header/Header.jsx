@@ -1,21 +1,24 @@
 /** @format */
 
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import styles from 'components/styles/sharedlayout.module.css';
 import Icon from 'components/Icon';
 import { Login } from 'components/Modal/Login';
 import { Registration } from 'components/Modal/Registration';
-import { useMainContext, auth, toastError, toastSuccess } from 'components/Helpers';
+import { useMainContext, auth, toastError, toastSuccess } from 'helpers';
 import { theme } from 'constants/theme';
 import { SelectAuth } from 'components/Modal/SelectAuth';
 import Menu from 'components/Menu';
+import clsx from 'clsx';
 
 const Header = () => {
 	const { idxColor, setIsOpenLogin, setIsOpenReg, user, setIsOpenSelectAuth, setUser } =
 		useMainContext();
 	const [isOpenMenu, setIsOpenMenu] = useState(false);
 	const [toFavorite, setToFavorite] = useState(false);
+	const [isHoveredUser, setIsHoveredUser] = useState(false);
+	const [isHoveredLogout, setIsHoveredLogout] = useState(false);
 
 	const navigate = useNavigate();
 	const { pathname } = useLocation();
@@ -58,16 +61,19 @@ const Header = () => {
 				<li>
 					<ul className={styles.page}>
 						<li>
-							<Link to='/' className={styles.link}>
+							<NavLink
+								to='/'
+								className={clsx(styles.link, pathname === '/' && styles.active)}
+							>
 								Home
-							</Link>
+							</NavLink>
 						</li>
 						<li>
 							{pathname === '/teachers' ? (
 								user ? (
-									<Link to='/favorites' className={styles.link}>
+									<NavLink to='/favorites' className={styles.link}>
 										Favorites
-									</Link>
+									</NavLink>
 								) : (
 									<button
 										className={styles.link}
@@ -80,9 +86,9 @@ const Header = () => {
 									</button>
 								)
 							) : (
-								<Link to='/teachers' className={styles.link}>
+								<NavLink to='/teachers' className={styles.link}>
 									Teachers
-								</Link>
+								</NavLink>
 							)}
 						</li>
 					</ul>
@@ -95,8 +101,13 @@ const Header = () => {
 									id='user'
 									className={styles.user}
 									style={{
-										backgroundColor: theme[idxColor].property.buttonGetStart,
+										backgroundColor: isHoveredUser
+											? theme[idxColor].property.color1
+											: theme[idxColor].property.buttonGetStart,
+										color: isHoveredUser ? '#ffffff' : '#5f155b',
 									}}
+									onMouseOver={() => setIsHoveredUser(true)}
+									onMouseOut={() => setIsHoveredUser(false)}
 									onClick={() => setIsOpenMenu(true)}
 								>
 									{user.displayName}
@@ -107,7 +118,14 @@ const Header = () => {
 								<button
 									type='button'
 									className={styles.login}
-									style={{ height: '48px' }}
+									style={{
+										height: '48px',
+										color: isHoveredLogout
+											? theme[idxColor].property.buttonGetStart
+											: '#121417',
+									}}
+									onMouseOver={() => setIsHoveredLogout(true)}
+									onMouseOut={() => setIsHoveredLogout(false)}
 									onClick={() => logout()}
 								>
 									Log out

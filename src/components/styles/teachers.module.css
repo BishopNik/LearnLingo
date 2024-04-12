@@ -1,5 +1,9 @@
 /** @format */
 
+.container {
+	height: calc(100vh - 88px);
+}
+
 .main {
 	display: flex;
 	flex-direction: column;
@@ -42,4 +46,8 @@
 	padding: 50px;
 	border-radius: 24px;
 	background-color: #ffffff;
+	font-size: 24px;
+	font-weight: 500;
+	line-height: 28px;
+	color: #121417;
 }

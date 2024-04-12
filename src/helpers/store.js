@@ -2,7 +2,7 @@
 
 import { collection, doc, setDoc, getDoc } from 'firebase/firestore';
 import { ref, get, query } from 'firebase/database';
-import { firestore, database } from 'components/Helpers';
+import { firestore, database } from 'helpers';
 
 export function saveToSessionStorage(value) {
 	try {

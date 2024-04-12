@@ -3,7 +3,7 @@
 import { useEffect, lazy, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth, useMainContext, readSettingsUser } from 'components/Helpers';
+import { auth, useMainContext, readSettingsUser } from 'helpers';
 import SharedLayout from './SharedLayout';
 import Loader from 'components/Loader';
 import { PrivateRoute } from 'components/PrivateRoute';

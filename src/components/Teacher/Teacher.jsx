@@ -4,11 +4,13 @@ import React, { useState } from 'react';
 import styles from 'components/styles/teacher.module.css';
 import clsx from 'clsx';
 import Icon from 'components/Icon';
-import { useMainContext, saveToFirestoreStorage } from 'components/Helpers';
+import { useMainContext, saveToFirestoreStorage } from 'helpers';
 import { theme } from 'constants/theme';
 
 function Teacher({ idx, teacher }) {
 	const [more, setMore] = useState(false);
+	const [isHovered, setIsHovered] = useState(false);
+	const [isHoveredLevel, setIsHoveredLevel] = useState(null);
 	const {
 		idxColor,
 		setIsOpenBookTrial,
@@ -17,6 +19,7 @@ function Teacher({ idx, teacher }) {
 		setLikedTeachers,
 		user,
 		setIsOpenSelectAuth,
+		setLevel,
 	} = useMainContext();
 
 	return (
@@ -95,7 +98,12 @@ function Teacher({ idx, teacher }) {
 				{!more && (
 					<button
 						className={styles.button_readmore}
+						style={{
+							color: isHovered ? theme[idxColor].property.buttonGetStart : '#121417',
+						}}
 						type='button'
+						onMouseOver={() => setIsHovered(true)}
+						onMouseOut={() => setIsHovered(false)}
 						onClick={() => setMore(true)}
 					>
 						Read more
@@ -125,13 +133,19 @@ function Teacher({ idx, teacher }) {
 							key={idx}
 							className={styles.level}
 							style={{
-								borderColor: theme[idxColor].property.buttonGetStart,
-								':hover': {
-									backgroundColor: theme[idxColor].property.buttonGetStart,
-									borderColor: theme[idxColor].property.buttonGetStart,
-								},
+								borderColor:
+									isHoveredLevel === l
+										? theme[idxColor].property.buttonGetStart
+										: '',
+								backgroundColor:
+									isHoveredLevel === l
+										? theme[idxColor].property.buttonGetStart
+										: 'transparent',
 							}}
 							type='button'
+							onMouseOver={() => setIsHoveredLevel(l)}
+							onMouseOut={() => setIsHoveredLevel(null)}
+							onClick={() => setLevel(l)}
 						>
 							#{l}
 						</li>
