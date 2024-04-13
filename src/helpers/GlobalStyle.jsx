@@ -39,6 +39,7 @@ export const GlobalStyle = createGlobalStyle`
         font-style: normal;
         margin: 0;
         padding: 0;
+        min-width: 320px;
     }
 
     ul {

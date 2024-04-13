@@ -22,7 +22,7 @@ const Header = () => {
 
 	const navigate = useNavigate();
 	const { pathname } = useLocation();
-	const rootElement = document.getElementById('root');
+	const rootElement = document.body;
 
 	if (pathname === '/') {
 		rootElement.style.backgroundColor = '#FFFFFF';

@@ -3,15 +3,19 @@
 import React, { useEffect } from 'react';
 import Modal from 'react-modal';
 import styled from 'components/styles/modal.module.css';
-import clsx from 'clsx';
 
 Modal.setAppElement('#root');
 
 const customStyles = {
 	overlay: {
-		position: 'absolute',
+		position: 'fixed',
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
 		backgroundColor: 'rgba(72, 76, 78, 0.6)',
-		zIndex: '999',
+		zIndex: 999,
+		overflow: 'auto',
 	},
 	content: {
 		position: 'absolute',
@@ -28,21 +32,6 @@ const customStyles = {
 };
 
 export const ModalWindow = ({ children, isOpen, onRequestClose }) => {
-	const overlayStyle = {
-		top: document.documentElement.scrollTop,
-		left: document.documentElement.scrollLeft,
-		width: '100%',
-		height: '100%',
-		position: 'absolute',
-		backgroundColor: 'rgba(72, 76, 78, 0.6)',
-		zIndex: '999',
-	};
-
-	const combinedStyles = {
-		overlay: overlayStyle,
-		content: customStyles.content,
-	};
-
 	useEffect(() => {
 		if (isOpen) document.body.style.overflow = 'hidden';
 		return () => {
@@ -52,10 +41,10 @@ export const ModalWindow = ({ children, isOpen, onRequestClose }) => {
 
 	return (
 		<Modal
-			className={clsx(styled.main, customStyles.overlay, overlayStyle)}
+			className={styled.main}
 			isOpen={isOpen}
 			onRequestClose={onRequestClose}
-			style={combinedStyles}
+			style={customStyles}
 			contentLabel='onRequestClose'
 		>
 			{children}

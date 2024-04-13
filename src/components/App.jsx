@@ -32,6 +32,23 @@ function App() {
 		};
 	}, [setIdxColor, setLikedTeachers, setUser]);
 
+	useEffect(() => {
+		const screenWidth = window.innerWidth;
+		const screenHeight = window.innerHeight;
+		if (screenWidth < 1312) {
+			const body = document.body;
+			const scaleCount = screenWidth / 1352;
+			const heigthCount = screenHeight / scaleCount;
+
+			body.style.scale = scaleCount;
+			body.style.height = ` ${heigthCount}px`;
+			body.style.position = 'absolute';
+			body.style.left = '50%';
+			body.style.transform = 'translate(-50%, 0)';
+			body.style.transformOrigin = 'left top';
+		}
+	}, []);
+
 	return isRefreshing ? (
 		<Loader />
 	) : (
